@@ -1,13 +1,13 @@
 software,name,default,description,label
 httpd,AcceptFilter,,Configures optimizations for a Protocol's Listener Sockets,performance
-httpd,AcceptPathInfo,Default,Resources accept trailing pathname information,others
+httpd,AcceptPathInfo,Default,Resources accept trailing pathname information,debuggability
 httpd,AccessFileName,.htaccess,Name of the distributed configuration file,environment
-httpd,AddAlt,,"Alternate text to display for a file, instead of an icon selected by filename",others
-httpd,AddAltByEncoding,,Alternate text to display for a file instead of an icon selected by MIME-encoding,others
-httpd,AddAltByType,,"Alternate text to display for a file, instead of an icon selected by MIME content-type",others
+httpd,AddAlt,,"Alternate text to display for a file, instead of an icon selected by filename",manageability
+httpd,AddAltByEncoding,,Alternate text to display for a file instead of an icon selected by MIME-encoding,manageability
+httpd,AddAltByType,,"Alternate text to display for a file, instead of an icon selected by MIME content-type",manageability
 httpd,AddCharset,,Maps the given filename extensions to the specified content charset,manageability
 httpd,AddDefaultCharset,Off,Default charset parameter to be added when a response content-type is text/plain or text/html,environment
-httpd,AddDescription,,Description to display for a file,others
+httpd,AddDescription,,Description to display for a file,manageability
 httpd,AddOutputFilterByType,,assigns an output filter to a particular media-type,manageability
 httpd,AddType,,Maps the given filename extensions onto the specified content type,manageability
 httpd,Alias,,Maps URLs to filesystem locations,manageability
@@ -42,7 +42,7 @@ httpd,CacheIgnoreNoLastMod,Off,Ignore the fact that a response has no Last Modif
 httpd,CacheIgnoreQueryString,Off,Ignore query string when caching,performance
 httpd,CacheIgnoreURLSessionIdentifiers,None,Ignore defined session identifiers encoded in the URL when caching,performance
 httpd,CacheKeyBaseURL,,Override the base URL of reverse proxied cache keys.,environment
-httpd,CacheLastModifiedFactor,0.1,The factor used to compute an expiry date based on the LastModified date.,others
+httpd,CacheLastModifiedFactor,0.1,The factor used to compute an expiry date based on the LastModified date.,performance
 httpd,CacheLock,off,Enable the thundering herd lock.,reliability
 httpd,CacheLockMaxAge,5,Set the maximum possible age of a cache lock.,security
 httpd,CacheLockPath,/tmp/mod_cache-lock +,Set the lock path directory.,environment
@@ -66,10 +66,10 @@ httpd,CGIDScriptTimeout,,The length of time to wait for more output from the CGI
 httpd,CharsetDefault,,Charset to translate into,environment
 httpd,CharsetOptions,ImplicitAdd,Configures charset translation behavior,manageability
 httpd,CharsetSourceEnc,,Source charset of files,environment
-httpd,CheckCaseOnly,Off,Limits the action of the speling module to case corrections,manageability
-httpd,ContentDigest,Off,Enables the generation of Content-MD5 HTTP Response headers,manageability
+httpd,CheckCaseOnly,Off,Limits the action of the speling module to case corrections,reliability
+httpd,ContentDigest,Off,Enables the generation of Content-MD5 HTTP Response headers,security
 httpd,CookieExpires,,Expiry time for the tracking cookie,performance
-httpd,CookieName,Apache,Name of the tracking cookie,others
+httpd,CookieName,Apache,Name of the tracking cookie,environment
 httpd,CookieStyle,Netscape,Format of the cookie header field,manageability
 httpd,DavGenericLockDB,,Location of the DAV lock database,environment
 httpd,DavLockDB,,Location of the DAV lock database,environment
@@ -79,7 +79,7 @@ httpd,DBDInitSQL,,Execute an SQL statement after connecting to a database,enviro
 httpd,DBDKeep,2,Maximum sustained number of connections,reliability
 httpd,DBDMax,10,Maximum number of connections,reliability
 httpd,DBDMin,1,Minimum number of connections,reliability
-httpd,DBDParams,,Parameters for database connection,others
+httpd,DBDParams,,Parameters for database connection,manageability
 httpd,DBDPersist,,Whether to use persistent connections,reliability
 httpd,DBDPrepareSQL,,Define an SQL prepared statement,environment
 httpd,DBDriver,,Specify an SQL driver,environment
@@ -118,7 +118,7 @@ httpd,H2ModernTLSOnly,on,"Require HTTP/2 connections to be ""modern TLS"" only",
 httpd,H2StreamMaxMemSize,65536,Maximum amount of output data buffered per stream.,performance
 httpd,H2TLSCoolDownSecs,1,Configure the number of seconds of idle time on TLS before shrinking writes,reliability
 httpd,H2TLSWarmUpSize,1048576,Configure the number of bytes on TLS connection before doing max writes,reliability
-httpd,HeaderName,,Name of the file that will be inserted at the top of the index listing,others
+httpd,HeaderName,,Name of the file that will be inserted at the top of the index listing,manageability
 httpd,HeartbeatAddress,,Multicast address for heartbeat packets,environment
 httpd,HeartbeatListen,,multicast address to listen for incoming heartbeat requests,environment
 httpd,HeartbeatMaxServers,10,Specifies the maximum number of servers that will be sending heartbeat requests to this server,reliability
@@ -126,7 +126,7 @@ httpd,HostnameLookups,Off,Enables DNS lookups on client IP addresses,manageabili
 httpd,IdentityCheckTimeout,30,Determines the timeout duration for ident requests,reliability
 httpd,ImapMenu,formatted,Action if no coordinates are given when calling an imagemap,manageability
 httpd,IncludeOptional,,Includes other configuration files from within the server configuration files,environment
-httpd,IndexHeadInsert,,Inserts text in the HEAD section of an index page.,others
+httpd,IndexHeadInsert,,Inserts text in the HEAD section of an index page.,manageability
 httpd,IndexIgnore,""".""",Adds to the list of files to hide when listing a directory,manageability
 httpd,IndexIgnoreReset,,Empties the list of files to hide when listing a directory,manageability
 httpd,IndexOptions,,Various configuration settings for directory indexing,environment
@@ -186,11 +186,11 @@ httpd,MemcacheConnTTL,15s,Keepalive time for idle connections,reliability
 httpd,MergeTrailers,off,Determines whether trailers are merged into headers,manageability
 httpd,MetaDir,.web,Name of the directory to find CERN-style meta information files,environment
 httpd,MetaFiles,off,Activates CERN meta-file processing,security
-httpd,MetaSuffix,.meta,File name suffix for the file containing CERN-style meta information,others
+httpd,MetaSuffix,.meta,File name suffix for the file containing CERN-style meta information,manageability
 httpd,MinSpareThreads,,Minimum number of idle threads available to handle request spikes,performance
 httpd,NameVirtualHost,,DEPRECATED: Designates an IP address for name-virtual hosting,environment
 httpd,NoProxy,,"Hosts, domains, or networks that will be connected to directly",environment
-httpd,NWSSLTrustedCerts,,List of additional client certificates,others
+httpd,NWSSLTrustedCerts,,List of additional client certificates,security
 httpd,Options,FollowSymlinks,Configures what features are available in a particular directory,manageability
 httpd,PidFile,logs/httpd.pid,File where the server records the process ID of the daemon,debuggability
 httpd,PrivilegesMode,FAST,Trade off processing speed and efficiency vs security against malicious privileges-aware code.,security
@@ -220,12 +220,12 @@ httpd,ProxySet,,Set various Proxy balancer or member parameters,performance
 httpd,ProxyStatus,Off,Show Proxy LoadBalancer status in mod_status,debuggability
 httpd,ProxyTimeout,,Network timeout for proxied requests,reliability
 httpd,QualifyRedirectURL,Off,Controls whether the REDIRECT_URL environment variable is fully qualified,manageability
-httpd,ReadmeName,,Name of the file that will be inserted at the end of the index listing,others
+httpd,ReadmeName,,Name of the file that will be inserted at the end of the index listing,manageability
 httpd,ReceiveBufferSize,0,TCP receive buffer size,performance
 httpd,Redirect,,Sends an external redirect asking the client to fetch a different URL,manageability
 httpd,RedirectMatch,,Sends an external redirect based on a regular expression match of the current URL,manageability
-httpd,RedirectPermanent,,Sends an external permanent redirect asking the client to fetch a different URL,others
-httpd,RedirectTemp,,Sends an external temporary redirect asking the client to fetch a different URL,others
+httpd,RedirectPermanent,,Sends an external permanent redirect asking the client to fetch a different URL,manageability
+httpd,RedirectTemp,,Sends an external temporary redirect asking the client to fetch a different URL,manageability
 httpd,RedisConnPoolTTL,15s,TTL used for the connection pool with the Redis server(s),reliability
 httpd,RedisTimeout,5s,R/W timeout used for the connection with the Redis server(s),reliability
 httpd,RemoteIPProxyProtocol,,Enable or disable PROXY protocol handling,security
@@ -239,8 +239,8 @@ httpd,ScriptAliasMatch,,Maps a URL to a filesystem location using a regular expr
 httpd,ScriptInterpreterSource,Script,Technique for locating the interpreter for CGI scripts,environment
 httpd,ScriptLog,,Location of the CGI script error logfile,debuggability
 httpd,ScriptLogBuffer,1024,Maximum amount of PUT or POST requests that will be recorded in the scriptlog,debuggability
-httpd,ScriptLogLength,10385760,Size limit of the CGI script logfile,reliability
-httpd,ScriptSock,cgisock,The filename prefix of the socket to use for communication with the cgi daemon,others
+httpd,ScriptLogLength,10385760,Size limit of the CGI script logfile,debuggability
+httpd,ScriptSock,cgisock,The filename prefix of the socket to use for communication with the cgi daemon,environment
 httpd,SecureListen,,Enables SSL encryption for the specified port,security
 httpd,SeeRequestTail,Off,"Determine if mod_status displays the first 63 characters of a request or the last 63, assuming the request itself is greater than 63 chars.",manageability
 httpd,SendBufferSize,0,TCP buffer size,performance
@@ -258,12 +258,12 @@ httpd,SessionDBDCookieRemove,On,Control for whether session ID cookies should be
 httpd,SessionDBDPerUser,Off,Enable a per user session,manageability
 httpd,SessionEnv,Off,Control whether the contents of the session are written to the HTTP_SESSION environment variable,manageability
 httpd,SessionExpiryUpdateInterval,0 (always update),Define the number of seconds a session's expiry may change without the session being updated,reliability
-httpd,SessionInclude,,Define URL prefixes for which a session is valid,others
+httpd,SessionInclude,,Define URL prefixes for which a session is valid,environment
 httpd,SessionMaxAge,0,Define a maximum age in seconds for a session,reliability
 httpd,SetHandler,,Forces all matching files to be processed by a handler,performance
 httpd,SetInputFilter,,Sets the filters that will process client requests and POST input,manageability
 httpd,SSIErrorMsg,"""[an error occurred +",Error message displayed when there is an SSI error,debuggability
-httpd,SSLCertificateFile,,Server PEM-encoded X.509 certificate data file or token identifier,others
+httpd,SSLCertificateFile,,Server PEM-encoded X.509 certificate data file or token identifier,security
 httpd,SSLCipherSuite,DEFAULT (depends on +,Cipher Suite available for negotiation in SSL handshake,security
 httpd,SSLCompression,off,Enable compression on the SSL level,security
 httpd,SSLFIPS,off,SSL FIPS mode Switch,security
@@ -280,22 +280,22 @@ httpd,SSLProxyCipherSuite,ALL:!ADH:RC4+RSA:+H +,Cipher Suite available for negot
 httpd,SSLProxyEngine,off,SSL Proxy Engine Operation Switch,security
 httpd,SSLProxyMachineCertificateFile,,File of concatenated PEM-encoded client certificates and keys to be used by the proxy,security
 httpd,SSLProxyProtocol,all -SSLv3 (up to 2 +,Configure usable SSL protocol flavors for proxy usage,environment
-httpd,SSLProxyVerifyDepth,1,Maximum depth of CA Certificates in Remote Server Certificate verification,reliability
+httpd,SSLProxyVerifyDepth,1,Maximum depth of CA Certificates in Remote Server Certificate verification,security
 httpd,SSLRandomSeed,,Pseudo Random Number Generator (PRNG) seeding source,environment
 httpd,SSLSessionCache,none,Type of the global/inter-process SSL Session Cache,performance
 httpd,SSLSessionCacheTimeout,300,Number of seconds before an SSL session expires in the Session Cache,reliability
 httpd,SSLSessionTicketKeyFile,,Persistent encryption/decryption key for TLS session tickets,security
-httpd,SSLSRPUnknownUserSeed,,SRP unknown user seed,others
+httpd,SSLSRPUnknownUserSeed,,SRP unknown user seed,security
 httpd,SSLStaplingErrorCacheTimeout,600,Number of seconds before expiring invalid responses in the OCSP stapling cache,reliability
 httpd,SSLStaplingFakeTryLater,on,"Synthesize ""tryLater"" responses for failed OCSP stapling queries",reliability
-httpd,SSLStaplingForceURL,,Override the OCSP responder URI specified in the certificate's AIA extension,others
+httpd,SSLStaplingForceURL,,Override the OCSP responder URI specified in the certificate's AIA extension,security
 httpd,SSLStaplingResponderTimeout,10,Timeout for OCSP stapling queries,reliability
 httpd,SSLStaplingResponseMaxAge,-1,Maximum allowable age for OCSP stapling responses,reliability
 httpd,SSLStaplingResponseTimeSkew,300,Maximum allowable time skew for OCSP stapling response validation,reliability
 httpd,SSLStaplingStandardCacheTimeout,3600,Number of seconds before expiring responses in the OCSP stapling cache,reliability
 httpd,SSLStrictSNIVHostCheck,off,Whether to allow non-SNI clients to access a name-based virtual host.,security
 httpd,SSLVerifyClient,none,Type of Client Certificate verification,security
-httpd,SSLVerifyDepth,1,Maximum depth of CA Certificates in Client Certificate verification,reliability
+httpd,SSLVerifyDepth,1,Maximum depth of CA Certificates in Client Certificate verification,security
 httpd,StartServers,,Number of child server processes created at startup,performance
 httpd,StartThreads,,Number of threads created on startup,performance
 httpd,ThreadLimit,,Sets the upper limit on the configurable number of threads per child process,reliability
@@ -305,7 +305,7 @@ httpd,TraceEnable,on,Determines the behavior on TRACE requests,debuggability
 httpd,TransferLog,,Specify location of a log file,debuggability
 httpd,UseCanonicalName,Off,Configures how the server determines its own name and port,manageability
 httpd,UseCanonicalPhysicalPort,Off,Configures how the server determines its own port,manageability
-httpd,User,#-1,The userid under which the server will answer requests,others
+httpd,User,#-1,The userid under which the server will answer requests,environment
 httpd,VirtualDocumentRoot,none,Dynamically configure the location of the document root for a given virtual host,environment
 httpd,VirtualDocumentRootIP,none,Dynamically configure the location of the document root for a given virtual host,environment
 httpd,VirtualScriptAlias,none,Dynamically configure the location of the CGI directory for a given virtual host,environment

@@ -1,5 +1,5 @@
 name,software,description,label
-file,aerospike,Specifies the path of the server log file for logging. ,environment
+file,aerospike,Specifies the path of the server log file for logging. ,debuggability
 context,aerospike,Specifies the context and level of logging to be logged.,debuggability
 cache-enabled,aerospike,"Whether to enable caching of Lua states for each registered Lua module, to benefit performance.",performance
 user-path,aerospike,Directory to be used by the Aerospike process to store user generated UDF files,environment
@@ -8,6 +8,7 @@ allow-xdr-writes,aerospike,Parameter to control whether to accept write transact
 cold-start-evict-ttl,aerospike,This sets the TTL below which records will be evicted (will not be loaded) during coldstart. ,reliability
 data-in-index,aerospike,"Optimization in single bin case, will only allow integer or float stored in index space. ",performance
 default-ttl,aerospike,Default time-to-live (in seconds) for a record from the time of creation or last update. ,reliability
+disable-cold-start-eviction,aerospike,"If true, disables eviction that may occur at cold start for this namespace only.",reliability
 disable-nsup,aerospike,"If true , disables NSUP primary index reductions for this namespace only. ",performance
 disable-write-dup-res,aerospike,Disables write duplicate resolution for the namespace. ,performance
 enable-benchmarks-batch-sub,aerospike,Enable histograms for batch sub transactions.,debuggability
@@ -30,28 +31,28 @@ memory-size,aerospike,Maximum amount of memory for the namespace. ,reliability
 migrate-order,aerospike,Number between 1 and 10 which determines the order namespaces are to be processed when migrating,manageability
 migrate-retransmit-ms,aerospike,"How long to wait for success, in milliseconds, before retrying a migration related transaction. ",reliability
 migrate-sleep,aerospike,Number of microseconds to sleep after each record migration. ,reliability
-ns-forward-xdr-writes,aerospike,This parameter provides fine grained control at namespace level to forward writes that originated from another XDR to the specified destination datacenters (in xdr section). ,security
+ns-forward-xdr-writes,aerospike,This parameter provides fine grained control at namespace level to forward writes that originated from another XDR to the specified destination datacenters (in xdr section). ,reliability
 partition-tree-sprigs,aerospike,Number of tree sprigs to use.  Providing more trees (sprigs) reduces the number of levels and speeds up the search.,performance
 prefer-uniform-balance,aerospike,"If true, this namespace will make an effort to distribute partitions evenly to all nodes. ",performance
-read-consistency-level-override,aerospike,"When set to a non-default value, overrides the client-specified per-transaction read consistency level for this namespace. ",reliability
+read-consistency-level-override,aerospike,"When set to a non-default value, overrides the client-specified per-transaction read consistency level for this namespace. ",performance
 replication-factor,aerospike,Number of copies of a record (including the master copy) maintained in the entire cluster.,reliability
 sets-enable-xdr,aerospike,Specifies whether XDR should ship all sets in a namespace or not.,reliability
 single-bin,aerospike,Setting it true will disallow multiple bin (columns) for a record.,manageability
-stop-writes-pct,aerospike,"Disallow writes (except deletes, replica writes and migration writes) when memory utilization (tracked under memory_used_bytes ) is above this specified percentage.",security
+stop-writes-pct,aerospike,"Disallow writes (except deletes, replica writes and migration writes) when memory utilization (tracked under memory_used_bytes ) is above this specified percentage.",reliability
 strong-consistency,aerospike,Set the namespace to Strong Consistency mode to favor consistency over availability. ,reliability
 strong-consistency-allow-expunge,aerospike,"When set to true , allows non-durable deletes to be used with strong-consistency .",reliability
 tomb-raider-eligible-age,aerospike,Number of seconds to retain a tombstone,reliability
 tomb-raider-period,aerospike,"Minimum amount of time, in seconds, between tomb-raider runs. ",reliability
 transaction-pending-limit,aerospike,Maximum pending transactions that can be queued up to work on the same key.,reliability
 write-commit-level-override,aerospike,"When set to a non-default value, overrides the client-specified per-transaction write commit level for this namespace.",reliability
-xdr-remote-datacenter,aerospike,Name of the datacenter to forward this namespace to,environment
-max-cells,aerospike,Sets the maximum desired number of cells in the approximation. ,others
+xdr-remote-datacenter,aerospike,Name of the datacenter to forward this namespace to,manageability
+max-cells,aerospike,Sets the maximum desired number of cells in the approximation. ,reliability
 max-level,aerospike,Maximum depth to go for a single cell,reliability
 mount,aerospike,Path to the mount directory (typically on NVMe SSD).,environment
 mounts-high-water-pct,aerospike,Data will be evicted if the mount's utilization is greater than this specified percentage,reliability
 mounts-size-limit,aerospike,Maximum amount of device space for the mount(s) on this namespace. ,reliability
 set-enable-xdr,aerospike,Set-specific parameter to enable/disable shipping through XDR,reliability
-cold-start-empty,aerospike,Setting this to true will cause cold start to ignore existing data on drives and start as if empty. Does not affect warm start.,reliability
+cold-start-empty,aerospike,Setting this to true will cause cold start to ignore existing data on drives and start as if empty. Does not affect warm start.,manageability
 commit-to-device,aerospike,Wait for write to flush to disk before acknowledging the client. ,reliability
 compression,aerospike,"Use of this item requires a feature-key-file , and specifies the algorithm used to compress records on SSD.",performance
 compression-level,aerospike,The compression level to use with zstd compression. A higher level means more but slower compression. ,performance
@@ -59,11 +60,13 @@ data-in-memory,aerospike,Keep a copy of all data in memory always.,reliability
 defrag-queue-min,aerospike,Don't defrag unless the queue has this many eligible wblocks.,performance
 defrag-sleep,aerospike,Number of microseconds to sleep after each wblock defragged.,reliability
 device,aerospike,Raw device used to store the namespace.,environment
+direct-files,aerospike," If direct-files is set true , then the odirect and odsync flags are enabled for file IO. ",reliability
 enable-osync,aerospike,Tells the device to flush on every write. This may impact performance. ,performance
 encryption,aerospike,Specifies the algorithm used by encryption at rest. ,security
 encryption-key-file,aerospike,Enables encryption at rest by providing the location of the encryption key file.,security
 file,aerospike,Data file path on rotational disk (using a file system).,environment
 filesize,aerospike,Maximum size for each file storage defined in this namespace.,reliability
+flush-max-ms,aerospike,Configures the maximum amount of time that a Streaming Write Buffer (SWB) can go without being written to device. ,reliability
 max-write-cache,aerospike,Number of bytes (should be multiple of write-block-size) the system is allowed to keep pending write blocks before failing writes.,performance
 post-write-queue,aerospike,Write block buffers to keep as cache (per device). ,performance
 read-page-cache,aerospike,This allows the OS to leverage page cache and can help with latencies for some workload types. ,performance
@@ -98,12 +101,13 @@ ca-file,aerospike,Path to the CA file needed for mutual authentication.,environm
 ca-path,aerospike,Path to the directory of the CA file for mutual authentication. ,environment
 cert-blacklist,aerospike,Path to the file containing rogue certificates serial numbers. ,environment
 cert-file,aerospike,Path to the TLS certificate file when TLS is enabled.,environment
-key-file,aerospike,Path to the key file when TLS is enabled. ,environment
+key-file,aerospike,Path to the key file when TLS is enabled. ,security
 key-file-password,aerospike,Password for the key-file . ,security
 enable-security,aerospike,Enable access control. ,security
 privilege-refresh-period,aerospike,Frequency in seconds with which the node verifies credentials and permissions for active client connections.,security
 polling-period,aerospike,How frequently (in seconds) to query the LDAP server for user group membership information. ,security
 query-base-dn,aerospike,Distinguished name of the LDAP directory entry at which to begin the search when querying for a user's group membership information.,environment
+query-user-dn,aerospike,Distinguished name of the user designated for user group membership queries.,environment
 server,aerospike,Name of the LDAP server to use. ,environment
 session-ttl,aerospike,"Lifetime (in seconds) of an access token. A TCP connection attempt with an expired token will fail, and the clien must log in again to get a fresh token. ",reliability
 tls-ca-file,aerospike,Path to the CA certificate file used for validating TLS connections to the LDAP server.,security
@@ -115,17 +119,17 @@ report-user-admin,aerospike,Set to true to report successful user administration
 report-violation,aerospike,Set to true to report security violations ,security
 report-authentication,aerospike,Set to true to report successful authentications in the syslog file.,debuggability
 report-user-admin,aerospike,Set to true to report successful user administration operations in the syslog file.,debuggability
-report-violation,aerospike,Set to true to report security violations in the syslog file.,debuggability
+report-violation,aerospike,Set to true to report security violations in the syslog file.,security
 advertise-ipv6,aerospike,Requires heartbeat v3. Set to true in order enable IPv6.,environment
 batch-index-threads,aerospike,Number of batch index response worker threads. ,performance
 batch-max-buffers-per-queue,aerospike,Number of 128 KiB response buffers allowed in each batch index queue before it is marked as full. ,performance
 batch-max-requests,aerospike,Max number of keys allowed per node.,reliability
 enable-health-check,aerospike,Monitors the health of a cluster and attempts to idendity potential outlier nodes. ,reliability
-feature-key-file,aerospike,Location of the digitally signed feature key file containing the features that are enabled,environment
+feature-key-file,aerospike,Location of the digitally signed feature key file containing the features that are enabled,security
 hist-track-back,aerospike,Total time span in seconds over which to cache data.,performance
 info-threads,aerospike,Number of threads to create to process info requests.,performance
 log-local-time,aerospike,Set this configuration to true to set logs to have local time stamp ,debuggability
-log-millis,aerospike,Set this to true in order to get millisecond timestamps in the log file.,debuggability
+log-millis,aerospike,Set this to true in order to get millisecond timestamps in the log file.,manageability
 migrate-fill-delay,aerospike,Number of seconds to delay before starting 'fill' migrations. ,reliability
 migrate-threads,aerospike,Number of threads per server allocated for data migration.,performance
 min-cluster-size,aerospike,The minimum number of nodes required for a cluster to form. ,performance

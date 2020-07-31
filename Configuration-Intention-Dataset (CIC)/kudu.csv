@@ -1,17 +1,19 @@
 software,name,description,label
 kudu,block_cache_capacity_mb,block cache capacity in MB,performance
-kudu,fs_data_dirs,"Comma-separated list of directories with data blocks. If this is not specified, fs_wal_dir will be used as the sole data block directory",manageability
+kudu,log_force_fsync_all,Whether the Log/WAL should explicitly call fsync() after each write.,performance
+kudu,fs_data_dirs,"Comma-separated list of directories with data blocks. If this is not specified, fs_wal_dir will be used as the sole data block directory",environment
 kudu,fs_metadata_dir,Directory with metadata.,environment
+kudu,fs_wal_dir,Directory with write-ahead logs.,debuggability
 kudu,master_addresses,"Comma-separated list of the RPC addresses belonging to all Masters in this cluster. NOTE: if not specified, configures a non-replicated Master.",environment
 kudu,rpc_bind_addresses,Comma-separated list of addresses to bind to for RPC connections.,environment
 kudu,keytab_file,Path to the Kerberos Keytab file for this server.,environment
 kudu,superuser_acl,"The list of usernames to allow as super users, comma-separated. ",security
 kudu,user_acl,"The list of usernames who may access the cluster, comma-separated.",security
-kudu,webserver_certificate_file,"The location of the debug webserver's SSL certificate file, in PEM format.",environment
+kudu,webserver_certificate_file,"The location of the debug webserver's SSL certificate file, in PEM format.",security
 kudu,webserver_port,Port to bind to for the web server,environment
-kudu,webserver_private_key_file,"The full path to the private key used as a counterpart to the public key contained in --webserver_certificate_file. If --webserver_certificate_file is set, this option must be set as well.",environment
+kudu,webserver_private_key_file,"The full path to the private key used as a counterpart to the public key contained in --webserver_certificate_file. If --webserver_certificate_file is set, this option must be set as well.",security
 kudu,webserver_private_key_password_cmd,"A Unix command whose output returns the password used to decrypt the Webserver's certificate private key file specified in --webserver_private_key_file. If the PEM key file is not password-protected, this flag does not need to be set.",security
-kudu,log_filename,Prefix of log filename ,manageability
+kudu,log_filename,Prefix of log filename ,debuggability
 kudu,maintenance_manager_num_threads,Size of the maintenance manager thread pool. ,performance
 kudu,memory_limit_hard_bytes,"Maximum amount of memory this daemon should use, in bytes.",performance
 kudu,version,show version and build info and exit,manageability
@@ -32,16 +34,19 @@ kudu,max_clock_sync_error_usec,Maximum allowed clock synchronization error as re
 kudu,consensus_rpc_timeout_ms,Timeout used for all consensus internal RPC communications.,reliability
 kudu,consensus_max_batch_size_bytes,The maximum per-tablet RPC batch size when updating peers.,performance
 kudu,follower_unavailable_considered_failed_sec,Seconds that a leader is unable to successfully heartbeat to a follower after which the follower is considered to be failed and evicted from the config,reliability
+kudu,fs_wal_dir_reserved_bytes,Number of bytes to reserve on the log directory filesystem for non-Kudu usage. ,reliability
 kudu,global_log_cache_size_limit_mb,The total memory used for caching log entries across all tablets is kept under this threshold.,performance
 kudu,log_cache_size_limit_mb,The total per-tablet size of consensus entries which may be kept in memory. ,performance
 kudu,log_async_preallocate_segments,Whether the WAL segments preallocation should happen asynchronously,reliability
-kudu,log_preallocate_segments,Whether the WAL should preallocate the entire segment before writing to it,manageability
-kudu,log_segment_size_mb,"The default size for log segments, in MB",manageability
+kudu,log_preallocate_segments,Whether the WAL should preallocate the entire segment before writing to it,performance
+kudu,log_segment_size_mb,"The default size for log segments, in MB",performance
 kudu,evict_failed_followers,Whether to evict followers from the Raft config ,manageability
 kudu,leader_failure_max_missed_heartbeat_periods,Maximum heartbeat periods that the leader can fail to heartbeat in before we consider the leader to be failed. The total failure timeout in milliseconds is raft_heartbeat_interval_ms times,reliability
-kudu,safe_time_advancement_without_writes,"Whether to enable the advancement of ""safe"" time in the absense of write operations",security
+kudu,safe_time_advancement_without_writes,"Whether to enable the advancement of ""safe"" time in the absense of write operations",reliability
 kudu,block_manager_max_open_files,Maximum number of open file descriptors to be used for data blocks.,reliability
 kudu,fs_data_dirs_full_disk_cache_seconds,"Number of seconds we cache the full-disk status in the block manager. During this time, writes to the corresponding root path will not be attempted",reliability
+kudu,fs_data_dirs_reserved_bytes,Number of bytes to reserve on each data directory filesystem for non-Kudu usage. ,reliability
+kudu,fs_target_data_dirs_per_tablet,Indicates the target number of data dirs to spread each tablet's data across. ,manageability
 kudu,default_num_replicas,Default number of replicas for tables that do not have the num_replicas set.,reliability
 kudu,master_ts_rpc_timeout_ms,Timeout used for the master to TS async rpc calls,reliability
 kudu,table_locations_ttl_ms,Maximum time in milliseconds which clients may cache table locations.,reliability
@@ -52,6 +57,8 @@ kudu,rpc_acceptor_listen_backlog,Socket backlog parameter used when listening fo
 kudu,rpc_encrypt_loopback_connections,Whether to encrypt data transfer on RPC connections that stay within a single host. ,security
 kudu,rpc_callback_max_cycles,The maximum number of cycles for which an RPC callback should be allowed to run without emitting a warning.,reliability
 kudu,remember_clients_ttl_ms,"Maximum amount of time, in milliseconds, the server ""remembers"" a client for the purpose of caching its responses.",performance
+kudu,rpc_dump_all_traces,"If true, dump all RPC traces at INFO level",debuggability
+kudu,rpc_duration_too_long_ms,Threshold (in milliseconds) above which a RPC is considered too long and its duration and method name are logged at INFO level. ,debuggability
 kudu,trusted_subnets,"A trusted subnet whitelist. If set explicitly, all unauthenticated or unencrypted connections are prohibited except the ones from the specified address blocks.",security
 kudu,rpc_max_message_size,The maximum size of a message that any RPC that the server will accept. ,reliability
 kudu,use_system_auth_to_local,"When enabled, use the system krb5 library to map Kerberos principal names to local (short) usernames.",manageability
@@ -68,7 +75,7 @@ kudu,webserver_advertised_addresses,Comma-separated list of addresses to adverti
 kudu,webserver_authentication_domain,Domain used for debug webserver authentication,debuggability
 kudu,webserver_enable_doc_root,"If true, webserver may serve static files from the webserver_doc_root",manageability
 kudu,webserver_interface,Interface to start debug webserver on. ,debuggability
-kudu,tablet_bloom_block_size,Block size of the bloom filters used for tablet keys,manageability
+kudu,tablet_bloom_block_size,Block size of the bloom filters used for tablet keys,performance
 kudu,tablet_history_max_age_sec,Number of seconds to retain tablet history. Reads initiated at a snapshot that is older than this age will be rejected.,reliability
 kudu,tablet_transaction_memory_limit_mb,Maximum amount of memory that may be consumed by all in-flight transactions belonging to a particular tablet.,reliability
 kudu,scanner_ttl_ms,Number of milliseconds of inactivity allowed for a scannerbefore it may be expired,reliability
@@ -82,9 +89,10 @@ kudu,metrics_retirement_age_ms,The minimum number of milliseconds a metric will 
 kudu,minidump_path,Directory to write minidump files to. ,environment
 kudu,minidump_size_limit_hint_kb,Size limit hint for minidump files in KB.,reliability
 kudu,memory_limit_soft_percentage,Percentage of the hard memory limit that this daemon may consume before memory throttling of writes begins. ,performance
+kudu,logbuflevel,Buffer log messages logged at this level or lower,debuggability
 kudu,logfile_mode,Log file mode/permissions.,security
 kudu,tserver_master_addrs,Comma separated addresses of the masters which the tablet server should connect to. ,environment
-kudu,log_prefix,Prepend the log prefix to the start of each log line,others
+kudu,log_prefix,Prepend the log prefix to the start of each log line,manageability
 kudu,remember_responses_ttl_ms,"Maximum amount of time, in milliseconds, the server ""remembers"" a response to a specific request for a client. ",reliability
 kudu,redact,Comma-separated list that controls redaction context. ,security
 kudu,enable_minidumps,Whether to enable minidump generation upon process crash or SIGUSR1. ,reliability

@@ -34,10 +34,10 @@ clientside_tos,squid,"Allows you to select a TOS/DSCP value for packets being tr
 tcp_outgoing_mark,squid,"Allows you to apply a Netfilter mark value to outgoing packets on the server side, based on an ACL.",manageability
 clientside_mark,squid,"Allows you to apply a Netfilter mark value to packets being transmitted on the client-side, based on an ACL.",manageability
 qos_flows,squid,"Allows you to select a TOS/DSCP value to mark outgoing connections to the client, based on where the reply was sourced.",manageability
-tcp_outgoing_address,squid,Allows you to map requests to different outgoing IP addresses based on the username or source address of the user making the request.,manageability
+tcp_outgoing_address,squid,Allows you to map requests to different outgoing IP addresses based on the username or source address of the user making the request.,environment
 host_verify_strict,squid,"Regardless of this option setting, when dealing with intercepted traffic, Squid always verifies that the destination IP address matches the Host header domain or IP (called 'authority form URL').",security
 client_dst_passthru,squid,With NAT or TPROXY intercepted traffic Squid may pass the request directly to the original client destination IP or seek a faster source using the HTTP Host header.,performance
-ssl_unclean_shutdown,squid,Some browsers (especially MSIE) bugs out on SSL shutdown messages.,reliability
+ssl_unclean_shutdown,squid,Some browsers (especially MSIE) bugs out on SSL shutdown messages.,debuggability
 ssl_engine,squid,The OpenSSL engine to use. You will need to set this if you would like to use hardware SSL acceleration for example.,manageability
 sslproxy_session_ttl,squid,Sets the timeout value for SSL sessions,reliability
 sslproxy_session_cache_size,squid,Sets the cache size to use for ssl session,performance
@@ -52,18 +52,18 @@ sslcrtvalidator_program,squid,Specify the location and options of the executable
 sslcrtvalidator_children,squid,Specifies the maximum number of certificate validation processes that Squid may spawn (numberofchildren) and several related options.,reliability
 cache_peer,squid,To specify other caches in a hierarchy,performance
 cache_peer_access,squid,Restricts usage of cache_peer proxies.,security
-neighbor_type_domain,squid,Modify the cache_peer neighbor type when passing requests about specific domains to the peer.,manageability
+neighbor_type_domain,squid,Modify the cache_peer neighbor type when passing requests about specific domains to the peer.,performance
 dead_peer_timeout,squid,"This controls how long Squid waits to declare a peer cache as ""dead.""",reliability
 forward_max_tries,squid,Limits the number of attempts to forward the request.,reliability
 cache_mem,squid,cache_mem' specifies the ideal amount of memory to be used,performance
 maximum_object_size_in_memory,squid,Objects greater than this size will not be attempted to kept in the memory cache. This should be set high enough to keep objects accessed frequently in memory to improve performance whilst low enough to keep larger objects from hoarding cache_mem.,performance
 memory_cache_shared,squid,Controls whether the memory cache is shared among SMP workers.,performance
 memory_cache_mode,squid,Controls which objects to keep in the memory cache (cache_mem),performance
-memory_replacement_policy,squid,The memory replacement policy parameter determines which objects are purged from memory when memory space is needed.,others
-cache_replacement_policy,squid,The cache replacement policy parameter determines which objects are evicted (replaced) when disk space is needed.,others
+memory_replacement_policy,squid,The memory replacement policy parameter determines which objects are purged from memory when memory space is needed.,reliability
+cache_replacement_policy,squid,The cache replacement policy parameter determines which objects are evicted (replaced) when disk space is needed.,performance
 minimum_object_size,squid,Objects smaller than this size will NOT be saved on disk.,performance
 maximum_object_size,squid,Set the default value for max-size parameter on any cache_dir.,performance
-store_dir_select_algorithm,squid,How Squid selects which cache_dir to use when the response object will fit into more than one.,manageability
+store_dir_select_algorithm,squid,How Squid selects which cache_dir to use when the response object will fit into more than one.,performance
 max_open_disk_fds,squid,To avoid having disk as the I/O bottleneck Squid can optionally bypass the on-disk cache if more than this amount of disk file descriptors are open.,performance
 cache_swap_low,squid,The low-water mark for AUFS/UFS/diskd cache object eviction by the cache_replacement_policy algorithm.,performance
 cache_swap_high,squid,The high-water mark for AUFS/UFS/diskd cache object eviction by the cache_replacement_policy algorithm.,performance
@@ -92,14 +92,14 @@ pinger_program,squid,Specify the location of the executable for the pinger proce
 pinger_enable,squid,Control whether the pinger is active at run-time.,manageability
 url_rewrite_program,squid,Specify the location of the executable URL rewriter to use.,environment
 url_rewrite_children,squid,Specifies the maximum number of redirector processes that Squid may spawn (numberofchildren) and several related options.,reliability
-url_rewrite_host_header,squid,"If defined, this access list specifies which requests are sent to the redirector processes.",manageability
-url_rewrite_bypass,squid,"When this is 'on', a request will not go through the redirector if all the helpers are busy. If this is 'off' and the redirector queue grows too large, the action is prescribed by the on-persistent-overload option.",others
-url_rewrite_extras,squid,Specifies a string to be append to request line format for the rewriter helper.,others
+url_rewrite_host_header,squid,"If defined, this access list specifies which requests are sent to the redirector processes.",security
+url_rewrite_bypass,squid,"When this is 'on', a request will not go through the redirector if all the helpers are busy. If this is 'off' and the redirector queue grows too large, the action is prescribed by the on-persistent-overload option.",manageability
+url_rewrite_extras,squid,Specifies a string to be append to request line format for the rewriter helper.,manageability
 url_rewrite_timeout,squid,Squid times active requests to redirector.,reliability
 store_id_program,squid,Specify the location of the executable StoreID helper to use.,environment
-store_id_extras,squid,Specifies a string to be append to request line format for the StoreId helper.,others
-store_id_access,squid,"If defined, this access list specifies which requests are sent to the StoreID processes.",others
-store_id_bypass,squid,"When this is 'on', a request will not go through the helper if all helpers are busy. If this is 'off' and the helper queue grows too large, the action is prescribed by the on-persistent-overload option.",others
+store_id_extras,squid,Specifies a string to be append to request line format for the StoreId helper.,manageability
+store_id_access,squid,"If defined, this access list specifies which requests are sent to the StoreID processes.",security
+store_id_bypass,squid,"When this is 'on', a request will not go through the helper if all helpers are busy. If this is 'off' and the helper queue grows too large, the action is prescribed by the on-persistent-overload option.",manageability
 cache,squid,Requests denied by this directive will not be served from the cache and their responses will not be stored in the cache.,performance
 send_hit,squid,"Responses denied by this directive will not be served from the cache (but may still be cached, see store_miss).",performance
 store_miss,squid,"Responses denied by this directive will not be cached (but may still be served from the cache, see send_hit).",performance
@@ -109,13 +109,13 @@ negative_ttl,squid,Set the Default Time-to-Live (TTL) for failed requests.,relia
 positive_dns_ttl,squid,Upper limit on how long Squid will cache positive DNS responses.,reliability
 negative_dns_ttl,squid,Time-to-Live (TTL) for negative caching of failed DNS lookups.,reliability
 range_offset_limit,squid,Sets an upper limit on how far (number of bytes) into the file  a Range request may be to cause Squid to prefetch the whole file.,performance
-minimum_expiry_time,squid,The minimum caching time according to (Expires - Date) headers Squid honors if the object can't be revalidated.,performance
+minimum_expiry_time,squid,The minimum caching time according to (Expires - Date) headers Squid honors if the object can't be revalidated.,reliability
 store_avg_object_size,squid,"Average object size, used to estimate number of objects your cache can hold.  The default is 13 KB.",performance
 request_header_max_size,squid,This specifies the maximum size for HTTP headers in a request.,performance
 reply_header_max_size,squid,This specifies the maximum size for HTTP headers in a reply.,performance
 request_body_max_size,squid,This specifies the maximum size for an HTTP request body.,performance
 client_request_buffer_max_size,squid,This specifies the maximum buffer size of a client request. It prevents squid eating too much memory when somebody uploads a large file.,performance
-broken_posts,squid,"A list of ACL elements which, if matched, causes Squid to send an extra CRLF pair after the body of a PUT/POST request.",manageability
+broken_posts,squid,"A list of ACL elements which, if matched, causes Squid to send an extra CRLF pair after the body of a PUT/POST request.",security
 adaptation_uses_indirect_client,squid,Controls whether the indirect client IP address (instead of the direct client IP address) is passed to adaptation services.,manageability
 via,squid,"If set (default), Squid will include a Via header in requests and replies as required by RFC2616.",manageability
 vary_ignore_expire,squid,Many HTTP servers supporting Vary gives such objects immediate expiry time with no cache-control header when requested by a HTTP/1.0 client. This option enables Squid to ignore such expiry times until HTTP/1.1 is fully implemented.,reliability
@@ -150,18 +150,18 @@ cache_effective_group,squid,Squid sets the GID to the effective user's default g
 httpd_suppress_version_string,squid,Suppress Squid version string info in HTTP headers and HTML error pages.,debuggability
 visible_hostname,squid,"If you want to present a special hostname in error messages, etc, define this.  Otherwise, the return value of gethostname() will be used.",debuggability
 unique_hostname,squid,If you want to have multiple machines with the same 'visible_hostname' you must give each machine a different 'unique_hostname' so forwarding loops can be detected.,environment
-hostname_aliases,squid,A list of other DNS names your cache has.,environment
+hostname_aliases,squid,A list of other DNS names your cache has.,manageability
 umask,squid,"Minimum umask which should be enforced while the proxy is running, in addition to the umask set at startup.",security
 announce_period,squid,This is how frequently to send cache announcements.,manageability
 announce_host,squid,Set the hostname where announce registration messages will be sent.,environment
-announce_file,squid,The contents of this file will be included in the announce registration messages.,others
+announce_file,squid,The contents of this file will be included in the announce registration messages.,manageability
 announce_port,squid,Set the port where announce registration messages will be sent.,environment
 httpd_accel_surrogate_id,squid,"Surrogates (http://www.esi.org/architecture_spec_1.0.html) need an identification token to allow control targeting. Because a farm of surrogates may all perform the same tasks, they may share an identification token.",manageability
 http_accel_surrogate_remote,squid,Set this to on to have squid behave as a remote surrogate.,manageability
 esi_parser,squid,Selects the XML parsing library to use when interpreting responses with Edge Side Includes.,manageability
 delay_pools,squid,This represents the number of delay pools to be used.,performance
-delay_class,squid,This defines the class of each delay pool.,others
-delay_access,squid,This is used to determine which delay pool a request falls into.,others
+delay_class,squid,This defines the class of each delay pool.,manageability
+delay_access,squid,This is used to determine which delay pool a request falls into.,manageability
 delay_initial_bucket_level,squid,"The initial bucket percentage is used to determine how much is put in each bucket when squid starts, is reconfigured, or first notices a host accessing it (in class 2 and class 3, individual hosts and networks only have buckets associated with them once they have been ""seen"" by squid).",manageability
 client_delay_pools,squid,This option specifies the number of client delay pools used. It must preceed other client_delay_* options.,performance
 client_delay_initial_bucket_level,squid,This option determines the initial bucket size as a percentage of max_bucket_size from client_delay_parameters.,manageability
@@ -191,7 +191,7 @@ netdb_low,squid,The low water mark for the ICMP measurement database.,performanc
 netdb_high,squid,The high water mark for the ICMP measurement database.,performance
 netdb_ping_period,squid,The minimum period for measuring a site.  There will be at least this much delay between successive pings to the same network.,reliability
 query_icmp,squid,"If you want to ask your peers to include ICMP data in their ICP replies, enable this option.",manageability
-test_reachability,squid,"When this is 'on', ICP MISS replies will be ICP_MISS_NOFETCH instead of ICP_MISS if the target host is NOT in the ICMP database, or has a zero RTT.",manageability
+test_reachability,squid,"When this is 'on', ICP MISS replies will be ICP_MISS_NOFETCH instead of ICP_MISS if the target host is NOT in the ICMP database, or has a zero RTT.",reliability
 icp_query_timeout,squid,Normally Squid will automatically determine an optimal ICP query timeout value based on the round-trip-time of recent ICP queries.,performance
 maximum_icp_query_timeout,squid,Normally the ICP query timeout is determined dynamically.  But sometimes it can lead to very large values (say 5 seconds). Use this option to put an upper limit on the dynamic timeout value.,reliability
 minimum_icp_query_timeout,squid,"Normally the ICP query timeout is determined dynamically.  But sometimes it can lead to very small timeouts, even lower than the normal latency variance on your link due to traffic. Use this option to put an lower limit on the dynamic timeout value. ",reliability
@@ -225,10 +225,10 @@ icap_default_options_ttl,squid,The default TTL value for ICAP OPTIONS responses 
 icap_persistent_connections,squid,Whether or not Squid should use persistent connections to an ICAP server.,reliability
 adaptation_send_client_ip,squid,"If enabled, Squid shares HTTP client IP information with adaptation services. For ICAP, Squid adds the X-Client-IP header to ICAP requests. For eCAP, Squid sets the libecap::metaClientIp transaction option.",manageability
 adaptation_send_username,squid,This sends authenticated HTTP client username (if available) to the adaptation service.,manageability
-icap_client_username_header,squid,ICAP request header name to use for adaptation_send_username.,others
+icap_client_username_header,squid,ICAP request header name to use for adaptation_send_username.,manageability
 icap_client_username_encode,squid,Whether to base64 encode the authenticated client username.,manageability
 ecap_enable,squid,Controls whether eCAP support is enabled.,manageability
-loadable_modules,squid,Instructs Squid to load the specified dynamic module(s) or activate preloaded module(s).,others
+loadable_modules,squid,Instructs Squid to load the specified dynamic module(s) or activate preloaded module(s).,manageability
 adaptation_service_set,squid,"Configures an ordered set of similar, redundant services. This is useful when hot standby or backup adaptation servers are available.",reliability
 adaptation_service_chain,squid,"Configures a list of complementary services that will be applied one-by-one, forming an adaptation chain or pipeline. This is useful when Squid must perform different adaptations on the same message.",reliability
 adaptation_service_iteration_limit,squid,Limits the number of iterations allowed when applying adaptation services to a message.,reliability
